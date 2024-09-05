@@ -1,1 +1,17 @@
 export.txt
+Server_Finder.spec
+dist/Server_Finder.exe
+build/Server_Finder/Analysis-00.toc
+build/Server_Finder/base_library.zip
+build/Server_Finder/EXE-00.toc
+build/Server_Finder/PKG-00.toc
+build/Server_Finder/PYZ-00.pyz
+build/Server_Finder/PYZ-00.toc
+build/Server_Finder/Server_Finder.pkg
+build/Server_Finder/warn-Server_Finder.txt
+build/Server_Finder/xref-Server_Finder.html
+build/Server_Finder/localpycs/pyimod01_archive.pyc
+build/Server_Finder/localpycs/pyimod02_importers.pyc
+build/Server_Finder/localpycs/pyimod03_ctypes.pyc
+build/Server_Finder/localpycs/pyimod04_pywin32.pyc
+build/Server_Finder/localpycs/struct.pyc
