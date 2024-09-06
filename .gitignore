@@ -16,3 +16,4 @@ build/Server_Finder/localpycs/pyimod03_ctypes.pyc
 build/Server_Finder/localpycs/pyimod04_pywin32.pyc
 build/Server_Finder/localpycs/struct.pyc
 dist/Sea of Thieves Server Finder.exe
+ServerFinderBot.py

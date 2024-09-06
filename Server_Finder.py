@@ -7,7 +7,6 @@ import sys
 import ctypes
 
 ctypes.windll.kernel32.SetConsoleTitleW("Sea of Thieves Server Finder")
-
 sotID = ""
 sotPorts = []
 captured_ip = []
@@ -63,19 +62,15 @@ def restarted():
         sniffingSotIp()
     
 def findSotID():
-    #print(f"Searching for Sea of Thieves PID...", end=" ")
     processes = psutil.process_iter()
     for process in processes:
         if (process.name() == "SoTGame.exe"):
             sotID = str(process.pid)
-            #print(f"Found! ({sotID})")
             return sotID
         
 def getSoTPort():
-    #print(f"Searching for local Sea of Thieves Port...", end=" ")
     try:  
         activeConnections = subprocess.run("netstat -anop udp", stdout=subprocess.PIPE).stdout.decode('utf-8')
-        activeConnections.strip()
         connectionslist = activeConnections.splitlines()
         for i in connectionslist:
             if sotID in i:
@@ -98,7 +93,6 @@ def process_packet(packet):
             captured_port.append(server_port)
         
 def sniffingSotIp():
-    #print("Sniffing for Sea of Thieves Server IP...")
     try:
         sniff(filter=f"udp port {sotPorts[1]}", prn=process_packet, count=10, timeout=5)
         print(f"Found Sea of thieves server ip as: {captured_ip[0]}:{captured_port[0]}")
@@ -117,5 +111,5 @@ def sniffingSotIp():
         clear()
         initialize()
         
-    
+
 initialize()
