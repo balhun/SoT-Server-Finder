@@ -8,18 +8,22 @@ import ctypes
 
 ctypes.windll.kernel32.SetConsoleTitleW("Sea of Thieves Server Finder")
 sotID = ""
+friendIP = ""
 sotPorts = []
 captured_ip = []
 captured_port = []
+allcaptured_ip = []
 
 def initialize():
     global sotID
+    global friendIP
     print("Welcome to Sea of Thieves Server Finder!\nGuide:")
     print(" 1.) You and your friend have to start the game and join a server.")
     print(" 2.) Press Enter to search for the server's ip adress.")
     print(" 3.) Server hop until your ip adresses and ports are matching.")
-    start = input("Do you want to start searching? Press Enter / Press any other key to exit\n")
+    start = input("Press Enter to start searching / Press any other key to exit\n")
     if start == "":
+        friendIP = input("Type in your friend's ip and port: e.g.: 52.233.177.108:30437\n")
         print()
         sotPorts.clear()
         captured_ip.clear()
@@ -34,7 +38,7 @@ def initialize():
         else:
             getSoTPort()
             sniffingSotIp()
-        restart = input("   Do you want to try again?\n      Press Enter / Type any other key to exit\n")
+        restart = input("   Do you want to try again?\n      Press Enter to try again / Type any other key to exit\n")
         if restart == "":
             restarted()
         else:
@@ -42,7 +46,7 @@ def initialize():
             clear()
             initialize()
     else:
-        sys.exit()
+        sys.exit() #Bug itt
 
 def restarted():
     print()
@@ -91,16 +95,27 @@ def process_packet(packet):
         if (server_ip not in captured_ip):
             captured_ip.append(server_ip)
             captured_port.append(server_port)
+            allcaptured_ip.append(f"{server_ip}:{server_port}")
         
 def sniffingSotIp():
     try:
         sniff(filter=f"udp port {sotPorts[1]}", prn=process_packet, count=10, timeout=5)
-        print(f"Found Sea of thieves server ip as: {captured_ip[0]}:{captured_port[0]}")
-        
-        restart = input("    Do you want to try again?\n      Press Enter / Press any other key to exit\n")
-        if restart == "":
-            restarted()
+        print(f"Found Sea of thieves server ip as:        {captured_ip[0]}:{captured_port[0]}")
+        if f"{captured_ip[0]}:{captured_port[0]}" != friendIP:
+            print(f"Your friend's and your Ip does NOT match: {friendIP}")
+            if f"{captured_ip[0]}:{captured_port[0]}" in allcaptured_ip and allcaptured_ip[-1] != f"{captured_ip[0]}:{captured_port[0]}":
+                print(allcaptured_ip)
+                print("You already been on this server. :(")
+            restart = input("Press Enter to try again / Press any other key to exit\n")
+            if restart == "":
+                restarted()
+            else:
+                clear = lambda: os.system('cls')
+                clear()
+                initialize()
         else:
+            print("You are on your friend's server! Congratulations!")
+            exit = input("Press Any key to exit\n")
             clear = lambda: os.system('cls')
             clear()
             initialize()
