@@ -17,3 +17,19 @@ build/Server_Finder/localpycs/pyimod04_pywin32.pyc
 build/Server_Finder/localpycs/struct.pyc
 dist/Sea of Thieves Server Finder.exe
 ServerFinderBot.py
+ServerFinderBot.spec
+build/ServerFinderBot/Analysis-00.toc
+build/ServerFinderBot/base_library.zip
+build/ServerFinderBot/EXE-00.toc
+build/ServerFinderBot/PKG-00.toc
+build/ServerFinderBot/PYZ-00.pyz
+build/ServerFinderBot/PYZ-00.toc
+build/ServerFinderBot/ServerFinderBot.pkg
+build/ServerFinderBot/warn-ServerFinderBot.txt
+build/ServerFinderBot/xref-ServerFinderBot.html
+build/ServerFinderBot/localpycs/pyimod01_archive.pyc
+build/ServerFinderBot/localpycs/pyimod02_importers.pyc
+build/ServerFinderBot/localpycs/pyimod03_ctypes.pyc
+build/ServerFinderBot/localpycs/pyimod04_pywin32.pyc
+build/ServerFinderBot/localpycs/struct.pyc
+dist/ServerFinderBot.exe
