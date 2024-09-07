@@ -87,7 +87,6 @@ def getSoTPort():
         clear()
         initialize()
         
-        
 def process_packet(packet):
     if UDP in packet and packet[UDP].dport == sotPorts[1]:
         server_ip = packet[IP].src
@@ -95,33 +94,37 @@ def process_packet(packet):
         if (server_ip not in captured_ip):
             captured_ip.append(server_ip)
             captured_port.append(server_port)
-            allcaptured_ip.append(f"{server_ip}:{server_port}")
+            if f"{server_ip}:{server_port}" not in allcaptured_ip:
+                allcaptured_ip.append(f"{server_ip}:{server_port}")
         
 def sniffingSotIp():
+    exit = False
+    restart = "ANY_OTHER_KEY"
     try:
         sniff(filter=f"udp port {sotPorts[1]}", prn=process_packet, count=10, timeout=5)
-        print(f"Found Sea of thieves server ip as:        {captured_ip[0]}:{captured_port[0]}")
+        print(f"Found Sea of Thieves server ip as:        {captured_ip[0]}:{captured_port[0]}")
         if f"{captured_ip[0]}:{captured_port[0]}" != friendIP:
             print(f"Your friend's and your Ip does NOT match: {friendIP}")
-            if f"{captured_ip[0]}:{captured_port[0]}" in allcaptured_ip and allcaptured_ip[-1] != f"{captured_ip[0]}:{captured_port[0]}":
-                print(allcaptured_ip)
+            if f"{captured_ip[0]}:{captured_port[0]}" in allcaptured_ip[:-1]:
                 print("You already been on this server. :(")
             restart = input("Press Enter to try again / Press any other key to exit\n")
-            if restart == "":
-                restarted()
-            else:
-                clear = lambda: os.system('cls')
-                clear()
-                initialize()
         else:
-            print("You are on your friend's server! Congratulations!")
-            exit = input("Press Any key to exit\n")
-            clear = lambda: os.system('cls')
-            clear()
-            initialize()
+            print("You are on your friend's server!          Congratulations!")
+            exiting = input("Press Any key to exit\n")
+            exit = True
     except:
         print("Server cannot be found! You probably left the game! Aborting...")
         time.sleep(5)
+        clear = lambda: os.system('cls')
+        clear()
+        initialize()
+        
+    if restart == "":
+        restarted()
+    else:
+        exit = True
+    
+    if exit == True:
         clear = lambda: os.system('cls')
         clear()
         initialize()
