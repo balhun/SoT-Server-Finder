@@ -46,7 +46,7 @@ def initialize():
             clear()
             initialize()
     else:
-        sys.exit() #Bug itt
+        sys.exit()
 
 def restarted():
     print()
@@ -102,6 +102,10 @@ def sniffingSotIp():
     restart = "ANY_OTHER_KEY"
     try:
         sniff(filter=f"udp port {sotPorts[1]}", prn=process_packet, count=10, timeout=5)
+        
+        
+        
+        
         print(f"Found Sea of Thieves server ip as:        {captured_ip[0]}:{captured_port[0]}")
         if f"{captured_ip[0]}:{captured_port[0]}" != friendIP:
             print(f"Your friend's and your Ip does NOT match: {friendIP}")
