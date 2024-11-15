@@ -50,3 +50,4 @@ build/Server_Finder2/localpycs/pyimod04_pywin32.pyc
 build/Server_Finder2/localpycs/struct.pyc
 dist/Server_Finder2.exe
 Server_Finder2.py
+Server_Finder_Cleaned.py
