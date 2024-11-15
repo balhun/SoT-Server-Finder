@@ -3,7 +3,6 @@ import subprocess
 import psutil
 from scapy.all import sniff, UDP, IP
 import time
-import sys
 import ctypes
 
 ctypes.windll.kernel32.SetConsoleTitleW("Sea of Thieves Server Finder")
