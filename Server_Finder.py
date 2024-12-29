@@ -69,7 +69,10 @@ def sniff_packets():
                 print("- You already been on this server. :(")
             
             lookup = (ip_lookup(sotIPPort[-1].split(":")[0]))
-            print(f"Your stamp is:\n - {lookup["Country"]}, {lookup["City"]}")
+            if "Country" in lookup and "City" in lookup:
+                print(f"Your stamp is:\n - {lookup["Country"]}, {lookup["City"]}")
+            else:
+                print("API error, couldn't get stamp location.")
     except:
         print("Something went wrong with finding the IP")
         print("Going back to the menu!")
