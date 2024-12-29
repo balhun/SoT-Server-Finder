@@ -1,25 +1,11 @@
-#The Sea of Thieves Server Finder
-#Copyright (C) 2024 Balázs Hunor
-#
-#This program is free software: you can redistribute it and/or modify
-#it under the terms of the GNU General Public License as published by
-#the Free Software Foundation, either version 3 of the License, or
-#(at your option) any later version.
-#
-#This program is distributed in the hope that it will be useful,
-#but WITHOUT ANY WARRANTY; without even the implied warranty of
-#MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-#GNU General Public License for more details.
-#
-#You should have received a copy of the GNU General Public License
-#along with this program. If not, see <https://www.gnu.org/licenses/>.
-
 import os
 import subprocess
 import psutil
 from scapy.all import sniff, UDP, IP
 import time
+import sys
 import ctypes
+import requests
 
 ctypes.windll.kernel32.SetConsoleTitleW("Sea of Thieves Server Finder")
 sotID = ""
@@ -71,17 +57,19 @@ def sniff_packets():
         getSoTPort()
         if sotPort != "":
             sniff(filter=f"udp port {sotPort}", prn=process_packet, count=10, timeout=5)
-            print("Found Sea of Thieves server ip as: " + sotIPPort[-1])
+            print("Found Sea of Thieves server ip as:\n\t- " + sotIPPort[-1])
+
             
-            if sotIPPort[-1] == friendIP:
+            if sotIPPort[-1] == friendIP and sotIPPort[-1] != "":
                 print("You are on your friend's server!          Congratulations!")
             else:
-                print(f"Your are NOT on your friend's server :(")
+                print(f"- Your are NOT on your friend's server :(")
                 
             if sotIPPort[-1] in sotIPPort[:-1]:
-                print("You already been on this server. :(")
-            else:
-                print("You haven't been on this server yet!")
+                print("- You already been on this server. :(")
+            
+            lookup = (ip_lookup(sotIPPort[-1].split(":")[0]))
+            print(f"Your stamp is:\n - {lookup["Country"]}, {lookup["City"]}")
     except:
         print("Something went wrong with finding the IP")
         print("Going back to the menu!")
@@ -89,6 +77,22 @@ def sniff_packets():
         clear = lambda: os.system('cls')
         clear()
         initialize()
+
+def ip_lookup(ip_address):
+    url = f"http://ip-api.com/json/{ip_address}"
+    response = requests.get(url)
+    
+    if response.status_code == 200:
+        data = response.json()
+        if data["status"] == "success":
+            return {
+                "Country": data.get("country"),
+                "City": data.get("city"),
+            }
+        else:
+            return {"Error": data.get("message", "Unknown error")}
+    else:
+        return {"Error": "Failed to connect to IP-API"}
 
 def user_input():
     command = input("\nPress Enter to search / Press any other key to exit\n")
