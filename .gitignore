@@ -68,3 +68,5 @@ build/Server_Finder_GUI/localpycs/pyimod04_pywin32.pyc
 build/Server_Finder_GUI/localpycs/struct.pyc
 dist/Server_Finder_GUI.exe
 Server_Finder_GUI.spec
+dist/Sea_of_Thieves_Server_Finder_Console_Edition.exe
+dist/Sea_of_Thieves_Server_Finder_GUI_Edition.exe

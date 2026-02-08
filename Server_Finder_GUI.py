@@ -36,7 +36,7 @@ class SoTServerFinderGUI(ctk.CTk):
 
         self.iconbitmap(resource_path("Servants_of_the_Flame_icon.ico"))
 
-        self.lbl_title = ctk.CTkLabel(self, text="SoT Server Finder", font=("Arial", 24, "bold"))
+        self.lbl_title = ctk.CTkLabel(self, text="Sea of Thieves Server Finder", font=("Arial", 24, "bold"))
         self.lbl_title.pack(pady=(20, 10))
 
         self.frame_input = ctk.CTkFrame(self)
