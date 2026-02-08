@@ -6,11 +6,11 @@ import time
 import sys
 import ctypes
 import requests
+import msvcrt
 
 ctypes.windll.kernel32.SetConsoleTitleW("Sea of Thieves Server Finder")
 sotID = ""
 sotPort = ""
-friendIP = ""
 sotIPPort = [""]
 
 def findSotID():
@@ -32,10 +32,10 @@ def getSoTPort():
     activeConnections = subprocess.run("netstat -anop udp", stdout=subprocess.PIPE).stdout.decode('utf-8')
     connectionslist = activeConnections.splitlines()
     for i in connectionslist:
-        if sotID in i:
+        if sotID in i and int(i.split(":")[1].split(" ")[0]) != 3074:
             sotPorts.append(int(i.split(":")[1].split(" ")[0]))
     try:
-        sotPort = sotPorts[1]
+        sotPort = sotPorts[0]
     except:
         print("Local ports cannot be found! Aborting... (Join a server)")
         sotPort = ""
@@ -58,12 +58,6 @@ def sniff_packets():
         if sotPort != "":
             sniff(filter=f"udp port {sotPort}", prn=process_packet, count=10, timeout=5)
             print("Found Sea of Thieves server ip as:\n\t- " + sotIPPort[-1])
-
-            
-            if sotIPPort[-1] == friendIP and sotIPPort[-1] != "":
-                print("You are on your friend's server!          Congratulations!")
-            else:
-                print(f"- Your are NOT on your friend's server :(")
                 
             if sotIPPort[-1] in sotIPPort[:-1]:
                 print("- You already been on this server. :(")
@@ -73,10 +67,15 @@ def sniff_packets():
                 print(f"Your stamp is:\n - {lookup["Country"]}, {lookup["City"]}")
             else:
                 print("API error, couldn't get stamp location.")
+
+        time.sleep(2)
+        while msvcrt.kbhit():
+            msvcrt.getch()
+        
     except:
         print("Something went wrong with finding the IP")
         print("Going back to the menu!")
-        time.sleep(4)
+        time.sleep(3)
         clear = lambda: os.system('cls')
         clear()
         initialize()
@@ -98,26 +97,24 @@ def ip_lookup(ip_address):
         return {"Error": "Failed to connect to IP-API"}
 
 def user_input():
-    command = input("\nPress Enter to search / Press any other key to exit\n")
-    if command.lower() == "":
-        findSotID()
-        sniff_packets()
-        user_input()
-    else:
+    print("\nPress Enter to search / Press any other key to exit\n")
+    key = msvcrt.getch()
+    if key == b'\x1b':  # ESC key
         print("Going back to the menu!")
         time.sleep(4)
         clear = lambda: os.system('cls')
         clear()
         initialize()
+    elif key == b'\r':
+        findSotID()
+        sniff_packets()
+        user_input()
 
 def initialize():
-    global friendIP
     print("Welcome to Sea of Thieves Server Finder!\nGuide:")
     print(" 1.) You and your friend have to start the game and join a server.")
     print(" 2.) Press Enter to search for the server's ip adress.")
     print(" 3.) Server hop until your ip adresses and ports are matching.\n")
-
-    friendIP = input("  Type in your friend's ip and port: e.g.: 52.233.177.108:30437\n  (Otherwise you can leave this empty)\n")
     user_input()
     
 initialize()
