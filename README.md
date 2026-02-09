@@ -34,7 +34,11 @@ pyinstaller --noconsole --onefile --icon="Servants_of_the_Flame_icon.ico" --add-
 ## Important
 - Make sure Npcap is installed correctly with WinPcap compatibility.
 - Ensure you run the tool with sufficient permissions to capture network packets.
-
+  
+*When you run the program Windows will block it because I didn't pay the developer fee to Microsoft. To run it:*
+1. Click More Info.
+2. Click Run Anyway.
+   
 ---
 
 ## Disclaimer
