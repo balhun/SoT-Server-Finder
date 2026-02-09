@@ -15,7 +15,7 @@ A tool to help identify the IP address and port of incoming traffic for **Sea of
 You can build the tool yourself using [PyInstaller](https://www.pyinstaller.org/):
 
 ```bash
-pyinstaller --noconsole --onefile --icon="Servants_of_the_Flame_icon.ico" Server_Finder.py
+pyinstaller --onefile --icon="Servants_of_the_Flame_icon.ico" Server_Finder.py
 ```
 ```bash
 pyinstaller --noconsole --onefile --icon="Servants_of_the_Flame_icon.ico" --add-data "Servants_of_the_Flame_icon.ico;." Server_Finder_GUI.py
