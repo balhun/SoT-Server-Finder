@@ -26,7 +26,7 @@ pyinstaller --noconsole --onefile --icon="Servants_of_the_Flame_icon.ico" --add-
 ## How It Works
 1. The program identifies the active Sea of Thieves process and scans your network connections to pinpoint the specific UDP port the game is using to communicate.
 2. It then analyzes network traffic on that port to capture the game server's IP address and port number directly from the data packets.
-3. Finally, it cross-references the server IP with a geolocation API and displays the server's region, city, IP and Port, allowing you to confirm if you are in the same lobby as your friends.
+3. Finally, it cross-references the server IP with a geolocation API and displays the server's region, city, IP and Port, allowing you to confirm if you are in the same server as your friends.
 > Starting from **v4.0**, it uses [ip-api.com](https://ip-api.com) to identify the location (stamp) of the connecting player.
 
 ---
